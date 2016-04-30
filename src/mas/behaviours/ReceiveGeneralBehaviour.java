@@ -27,7 +27,13 @@ public class ReceiveGeneralBehaviour extends SimpleBehaviour{
 		//SI ON RECOIT UN MESSAGE
 		if (msg != null) {
 			//System.out.println("***********ReceiveGeneralBehaviour**********");
-
+			
+			//SI J'AI DEJA RECU CE MESSAGE, JE REPARS
+			if (ag.lastMessage.equals(msg.getContent())){
+				System.out.println(ag.getLocalName() + " : J'AI DEJA RECU CE MESSAGE !");
+				ag.block = false;
+				return;
+			}
 			String[] data = msg.getContent().split("-");
 			
 			//DATA[0] CONTIENT TOUJOURS LE TYPE DE MESSAGE
@@ -64,6 +70,7 @@ public class ReceiveGeneralBehaviour extends SimpleBehaviour{
 				}
 				break;
 			}
+			ag.lastMessage = msg.getContent();
 		} else {
 			ag.block = true;
 			//SI JE SUIS EN SITUATION D'INTERBLOCAGE

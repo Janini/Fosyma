@@ -47,8 +47,9 @@ public class Principal {
 		String nodeStyle_agent= "node.agent {"+"fill-color: blue;"+"}";
 		String nodeStyle_treasure="node.treasure {"+"fill-color: yellow;"+"}";
 		String nodeStyle_EntryExit="node.exit {"+"fill-color: green;"+"}";
+		String nodeStyle_unexplored="node.unexplored {"+"fill-color: gray;"+"}";
 		
-		String nodeStyle=defaultNodeStyle+nodeStyle_wumpus+nodeStyle_agent+nodeStyle_treasure+nodeStyle_EntryExit;
+		String nodeStyle=defaultNodeStyle+nodeStyle_wumpus+nodeStyle_agent+nodeStyle_treasure+nodeStyle_EntryExit+nodeStyle_unexplored;
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
 		//TODO ANCIEN ENV

@@ -41,6 +41,7 @@ public class ExploAgent extends abstractAgent{
 	public boolean interblocage = false;
 	public String wantedToGo = ""; //EN CAS D'INTERBLOCAGE, LA SALLE INACCESSIBLE
 	public HashSet obs = new HashSet(); //LISTE DES SALLES OBSERVEES
+	public String lastMessage = ""; //PERMET DE TERMINER UNE CONVERSATION
 	public HashMap<String,Integer> listTresors = new HashMap<String, Integer>(); //MAPPING SALLE QUI CONTIENT UN TRESOR - VALEUR DU TRESOR 
 	
 	public static final Object lock = new Object();
@@ -65,7 +66,7 @@ public class ExploAgent extends abstractAgent{
 			private static final long serialVersionUID = 1L;
 			public int onEnd() {
 			    reset();
-			    doWait(50);
+			    doWait(500);
 			    myAgent.addBehaviour(this);
 			    return super.onEnd();
 			  }
@@ -257,11 +258,11 @@ public class ExploAgent extends abstractAgent{
 	
 	public void echecDeplacement(){
 		System.out.println(this.getLocalName()+" : J'essaye de bouger (" + nbEssaiDeplacement + ")");
-		if (nbEssaiDeplacement == ESSAISDEPLACEMENT){
+		if (this.nbEssaiDeplacement == ESSAISDEPLACEMENT){
 			System.out.println("INTERBLOCAGE");
 			this.interblocage = true;
 		} else
-			nbEssaiDeplacement++;
+			this.nbEssaiDeplacement++;
 		
 	}
 	

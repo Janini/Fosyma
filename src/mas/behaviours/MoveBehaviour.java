@@ -63,6 +63,21 @@ public class MoveBehaviour extends SimpleBehaviour{
 							n.addAttribute("ui.label", split[0]+","+split[1]);
 							
 							System.out.println("CREATION NOEUD "+myPosition);
+							System.out.println(lobs.size());
+
+							for(Couple<String,List<Attribute>> c : lobs){
+								String pos2 = c.getLeft();
+								System.out.println(pos2);
+								if(pos2.equals(myPosition))
+									continue;
+								String[] split2 = pos2.split("_");
+								Node n2 = Principal.graph.addNode(pos2);
+								n2.addAttribute("x", split2[0]);
+								n2.addAttribute("y", split2[1]);
+								n2.addAttribute("ui.label", split2[0]+","+split2[1]);
+								n2.setAttribute("ui.class", "unexplored");
+								Principal.graph.addEdge(myPosition+"-"+pos2, myPosition, pos2);
+							}
 						}
 	
 						//TODO AUTRES
@@ -71,10 +86,22 @@ public class MoveBehaviour extends SimpleBehaviour{
 		
 							n.addAttribute("x", myPosition);
 							n.addAttribute("ui.label", myPosition);
+							
+							for(Couple<String,List<Attribute>> c : lobs){
+								String pos2 = c.getLeft();
+								System.out.println(pos2);
+								if(pos2.equals(myPosition))
+									continue;
+								Node n2 = Principal.graph.addNode(pos2);
+								n2.addAttribute("x", pos2);
+								n2.addAttribute("ui.label", pos2);
+								n2.setAttribute("ui.class", "unexplored");
+								Principal.graph.addEdge(myPosition+"-"+pos2, myPosition, pos2);
+							}
 						}
 						
 						try{
-							Thread.sleep(100);
+							Thread.sleep(200);
 						} catch(Exception e){
 							
 						}
@@ -137,10 +164,10 @@ public class MoveBehaviour extends SimpleBehaviour{
 				if (finExploration){
 					System.out.println(ag.getLocalName()+ " : J'ai fini ! Les trésors que j'ai vu : "+ag.listTresors);// Ce que j'ai parcouru "+ag.getPath()+ ", ce que je sais "+ ag.getVus()+", je dois me rendre en " + ag.getRdv());
 					
-					AStar astar = new AStar(Principal.graph);
+					/*AStar astar = new AStar(Principal.graph);
 					astar.compute("0_0", ag.getStart());
 					System.err.println(astar.getShortestPath());
-					
+					*/
 					ag.doWait();
 					return;
 				}
@@ -178,7 +205,7 @@ public class MoveBehaviour extends SimpleBehaviour{
 	}
 	
 	//ON ENLEVE LES CASES DEJA VUES DE LA LISTE DES CASES ACCESSIBLES
-	public void remove(List<Couple<String,List<Attribute>>> lobs, List<String> vus){
+	public static void remove(List<Couple<String,List<Attribute>>> lobs, List<String> vus){
 		int j = 0;
 		while (j < lobs.size()){
 			if (vus.contains(lobs.get(j).getLeft())){
